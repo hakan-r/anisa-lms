@@ -13,7 +13,7 @@ namespace anisa_lms.Controllers
         private readonly IModuleService _moduleService = moduleService;
 
         [HttpGet("~/api/course/{cId:int}/module")]
-        public async Task<IActionResult> GetModulesForStudent([FromRoute] int cId, [FromBody] string studentId)
+        public async Task<IActionResult> GetModulesForStudent([FromRoute] int cId, [FromQuery] string studentId)
         {
             return Ok(await _moduleService.GetModulesForStudent(cId, studentId));
         }

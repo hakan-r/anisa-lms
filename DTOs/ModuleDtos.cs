@@ -9,7 +9,6 @@ namespace anisa_lms.DTOs
         [Required]
         public string Content { get; set; } = "";
         public int OrderIndex { get; set; }
-        public bool IsLocked { get; set; } = false;
     }
 
     public class CreateModuleDto : ModuleBaseDto
@@ -22,5 +21,6 @@ namespace anisa_lms.DTOs
 
     public class ModuleDto : ModuleBaseDto {
         public int Id { get; set; }
+        public bool IsLocked { get; set; } = false;
     }
 }

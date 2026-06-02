@@ -1,7 +1,9 @@
 using anisa_lms.Data;
+using anisa_lms.Interfaces.IRepository;
 using anisa_lms.Interfaces.IService;
 using anisa_lms.Mappings;
 using anisa_lms.Models;
+using anisa_lms.Repositories;
 using anisa_lms.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -124,11 +126,20 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 // Services
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
+builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
+builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+builder.Services.AddScoped<IAssessmentScoreRepository, AssessmentScoreRepository>();
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddScoped<IModuleService, ModuleService>();
+builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+builder.Services.AddScoped<IAssessmentScoreService, AssessmentScoreService>();
 
 var app = builder.Build();
 
