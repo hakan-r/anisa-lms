@@ -1,5 +1,5 @@
 using anisa_lms.Data;
-using anisa_lms.Interfaces;
+using anisa_lms.Interfaces.IService;
 using anisa_lms.Mappings;
 using anisa_lms.Models;
 using anisa_lms.Services;

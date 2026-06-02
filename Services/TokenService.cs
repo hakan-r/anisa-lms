@@ -1,9 +1,9 @@
 ﻿using anisa_lms.Models;
-using anisa_lms.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using anisa_lms.Interfaces.IService;
 
 namespace anisa_lms.Services
 {

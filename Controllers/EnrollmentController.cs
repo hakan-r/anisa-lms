@@ -1,5 +1,5 @@
 ﻿using anisa_lms.DTOs;
-using anisa_lms.Interfaces;
+using anisa_lms.Interfaces.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,24 +15,24 @@ namespace anisa_lms.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateEnrollmentDto create)
         {
-            await _enrollmentService.CreateAsync(create);
+            await _enrollmentService.CreateEnrollment(create);
 
             return Ok(new { message = "Student enrolled successfully." });
         }
 
-        [HttpPut("{eId:guid}")]
-        public async Task<IActionResult> Update([FromRoute] Guid eId, [FromBody] UpdateEnrollmentDto update)
+        [HttpPut("{eId:int}")]
+        public async Task<IActionResult> Update([FromRoute] int eId, [FromBody] UpdateEnrollmentDto update)
         {
-            var enrollment = await _enrollmentService.UpdateAsync(eId, update);
+            var enrollment = await _enrollmentService.UpdateEnrollment(eId, update);
             if (enrollment == null) return NotFound(new { message = "Enrollment with given ID does not exist." });
 
             return NoContent();
         }
 
-        [HttpDelete("{eId:guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid eId)
+        [HttpDelete("{eId:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int eId)
         {
-            var enrollment = await _enrollmentService.DeleteAsync(eId);
+            var enrollment = await _enrollmentService.DeleteEnrollment(eId);
             if (enrollment == null) return NotFound(new { message = "Enrollment with given ID does not exist." });
 
             return NoContent();

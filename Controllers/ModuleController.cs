@@ -1,5 +1,5 @@
 ﻿using anisa_lms.DTOs;
-using anisa_lms.Interfaces;
+using anisa_lms.Interfaces.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,27 +12,33 @@ namespace anisa_lms.Controllers
     {
         private readonly IModuleService _moduleService = moduleService;
 
+        [HttpGet("~/api/course/{cId:int}/module")]
+        public async Task<IActionResult> GetModulesForStudent([FromRoute] int cId, [FromBody] string studentId)
+        {
+            return Ok(await _moduleService.GetModulesForStudent(cId, studentId));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateModuleDto create)
         {
-            await _moduleService.CreateAsync(create);
+            await _moduleService.CreateModule(create);
 
             return Ok(new { message = "Module created successfully." });
         }
 
-        [HttpPut("{mId:guid}")]
-        public async Task<IActionResult> Update([FromRoute] Guid mId, [FromBody] UpdateModuleDto update)
+        [HttpPut("{mId:int}")]
+        public async Task<IActionResult> Update([FromRoute] int mId, [FromBody] UpdateModuleDto update)
         {
-            var result = await _moduleService.UpdateAsync(mId, update);
+            var result = await _moduleService.UpdateModule(mId, update);
             if (result == null) return NotFound(new { message = "Module with given ID does not exist." });
 
             return NoContent();
         }
 
-        [HttpDelete("{mId:guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid mId)
+        [HttpDelete("{mId:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int mId)
         {
-            var result = await _moduleService.DeleteAsync(mId);
+            var result = await _moduleService.DeleteModule(mId);
             if (result == null) return NotFound(new { message = "Module with given ID does not exist." });
 
             return NoContent();

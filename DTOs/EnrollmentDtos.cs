@@ -1,16 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using anisa_lms.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace anisa_lms.DTOs
 {
     public class EnrollmentBaseDto
     {
-        public decimal ProgressPercentage { get; set; }
+        public StudentStatus Status { get; set; } = StudentStatus.Active;
     }
 
     public class CreateEnrollmentDto : EnrollmentBaseDto
     {
         [Required]
-        public Guid CourseId { get; set; }
+        public int CourseId { get; set; }
         [Required]
         public string StudentId { get; set; } = "";
     }
@@ -19,7 +20,7 @@ namespace anisa_lms.DTOs
 
     public class EnrollmentDto : EnrollmentBaseDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string StudentFullName { get; set; } = "";
     }
 }

@@ -2,13 +2,21 @@
 {
     public class Enrollment
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public int Id { get; set; }
         public string StudentId { get; set; } = "";
-        public Guid CourseId { get; set; }
-        public decimal ProgressPercentage { get; set; }
+        public int CourseId { get; set; }
+        public StudentStatus Status { get; set; } = StudentStatus.Active;
         public DateTime EnrolledAt { get; set; }
 
-        public virtual AppUser? Student { get; set; }
-        public virtual Course? Course { get; set; }
+        public AppUser? Student { get; set; }
+        public Course? Course { get; set; }
+    }
+
+    public enum StudentStatus
+    {
+        Active = 1,
+        Completed = 2,
+        Dropped = 3,
+        PendingPayment = 4
     }
 }

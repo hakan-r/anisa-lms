@@ -1,5 +1,5 @@
 ﻿using anisa_lms.DTOs;
-using anisa_lms.Interfaces;
+using anisa_lms.Interfaces.IService;
 using anisa_lms.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

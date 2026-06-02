@@ -1,43 +1,51 @@
 ﻿using anisa_lms.Data;
 using anisa_lms.DTOs;
-using anisa_lms.Interfaces;
+using anisa_lms.Interfaces.IRepository;
+using anisa_lms.Interfaces.IService;
 using anisa_lms.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace anisa_lms.Services
 {
-    public class EnrollmentService(AppDbContext context, IMapper mapper) : IEnrollmentService
+    public class EnrollmentService(IEnrollmentRepository repo, ICourseRepository courseRepo, IMapper mapper) : IEnrollmentService
     {
-        private readonly AppDbContext _context = context;
+        private readonly IEnrollmentRepository _repo = repo;
+        private readonly ICourseRepository _courseRepo = courseRepo;
         private readonly IMapper _mapper = mapper;
 
-        public async Task CreateAsync(CreateEnrollmentDto create)
+        public async Task CreateEnrollment(CreateEnrollmentDto create)
         {
+            var course = await _courseRepo.GetByIdAsync(create.CourseId) ?? throw new Exception("Course not found");
+            var enrollmentsCount = await _courseRepo.GetEnrollmentsCountAsync(create.CourseId);
+
+            if (course.MaxEnrollments <= enrollmentsCount)
+                throw new Exception("Course is full. You cannot enroll anymore students");
+
             var enrollment = _mapper.Map<Enrollment>(create);
 
-            await _context.Enrollments.AddAsync(enrollment);
-            await _context.SaveChangesAsync();
+            await _repo.CreateAsync(enrollment);
+            await _repo.SaveChangesAsync();
         }
 
-        public async Task<bool?> DeleteAsync(Guid eId)
+        public async Task<bool?> DeleteEnrollment(int eId)
         {
-            var enrollment = await _context.Enrollments.FirstOrDefaultAsync(e => e.Id == eId);
+            var enrollment = await _repo.GetByIdAsync(eId);
             if (enrollment == null) return null;
 
-            _context.Enrollments.Remove(enrollment);
-            await _context.SaveChangesAsync();
+            _repo.DeleteAsync(enrollment);
+            await _repo.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<bool?> UpdateAsync(Guid eId, UpdateEnrollmentDto update)
+        public async Task<bool?> UpdateEnrollment(int eId, UpdateEnrollmentDto update)
         {
-            var enrollment = await _context.Enrollments.FirstOrDefaultAsync(e => e.Id == eId);
+            var enrollment = await _repo.GetByIdAsync(eId);
             if (enrollment == null) return null;
 
             _mapper.Map(update, enrollment);
-            await _context.SaveChangesAsync();
+            await _repo.SaveChangesAsync();
 
             return true;
         }

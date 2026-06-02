@@ -10,6 +10,8 @@ namespace anisa_lms.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Assessment> Assessments { get; set; }
+        public DbSet<AssessmentScore> AssessmentScores { get; set; }
+        public DbSet<StudentModuleProgress> ModuleProgresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

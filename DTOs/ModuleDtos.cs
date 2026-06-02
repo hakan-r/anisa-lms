@@ -9,17 +9,18 @@ namespace anisa_lms.DTOs
         [Required]
         public string Content { get; set; } = "";
         public int OrderIndex { get; set; }
+        public bool IsLocked { get; set; } = false;
     }
 
     public class CreateModuleDto : ModuleBaseDto
     {
         [Required]
-        public Guid CourseId { get; set; }
+        public int CourseId { get; set; }
     }
 
     public class UpdateModuleDto : ModuleBaseDto { }
 
     public class ModuleDto : ModuleBaseDto {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }

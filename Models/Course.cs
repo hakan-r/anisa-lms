@@ -1,17 +1,32 @@
-﻿namespace anisa_lms.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace anisa_lms.Models
 {
     public class Course
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public int Id { get; set; }
         public string? InstructorId { get; set; } = "";
+        [Required]
         public string Title { get; set; } = "";
         public string? Description { get; set; } = "";
+        public CourseStatus Status { get; set; } = CourseStatus.Draft;
+        [Required]
+        public int MaxEnrollments { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public virtual ICollection<Enrollment> Enrollments { get; set; } = [];
-        public virtual ICollection<Module> Modules { get; set; } = [];
-        public virtual ICollection<Assessment> Assessments { get; set; } = [];
+        public ICollection<Enrollment> Enrollments { get; set; } = [];
+        public ICollection<Module> Modules { get; set; } = [];
+        public ICollection<Assessment> Assessments { get; set; } = [];
 
-        public virtual AppUser? Instructor { get; set; }
+        public AppUser? Instructor { get; set; }
+    }
+
+    public enum CourseStatus
+    {
+        Draft = 0,
+        Published = 1,
+        Scheduled = 2,
+        Private = 3,
+        Archived = 4
     }
 }

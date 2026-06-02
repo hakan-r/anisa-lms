@@ -1,13 +1,17 @@
-﻿namespace anisa_lms.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace anisa_lms.Models
 {
     public class Module
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid CourseId { get; set; }
+        public int Id { get; set; }
+        public int CourseId { get; set; }
+        [Required]
         public string Title { get; set; } = "";
+        [Required]
         public string Content { get; set; } = "";
         public int OrderIndex { get; set; }
 
-        public virtual Course? Course { get; set; }
+        public Course? Course { get; set; }
     }
 }

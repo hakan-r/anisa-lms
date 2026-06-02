@@ -1,6 +1,6 @@
 ﻿using anisa_lms.Models;
 
-namespace anisa_lms.Interfaces
+namespace anisa_lms.Interfaces.IService
 {
     public interface ITokenService
     {
